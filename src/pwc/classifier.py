@@ -5,7 +5,7 @@ import numpy as np
 import csv
 
 
-def dec_to_nparray(dd, szformat = 'f8'):
+def dec_to_nparray(dd, szformat='f8'):
     '''
     Convert a 'rectangular' dictionnary to numpy NdArray
     entry
@@ -16,14 +16,20 @@ def dec_to_nparray(dd, szformat = 'f8'):
     names = dd.keys()
     firstKey = dd.keys()[0]
     formats = [szformat] * len(names)
-    dtype = dict(names = names, formats=formats)
+    dtype = dict(names=names, formats=formats)
     values = [tuple(dd[k][0] for k in dd.keys())]
     data = np.array(values, dtype=dtype)
-    for i in range(1,len(dd[firstKey])) :
+    for i in range(1, len(dd[firstKey])):
         values = [tuple(dd[k][i] for k in dd.keys())]
         data_tmp = np.array(values, dtype=dtype)
         data = np.concatenate((data, data_tmp))
     return data
+
+
+def remove_result(attributes):
+    cpy = attributes.copy()
+    cpy.pop(Website.Tag.RESULT.value, None)
+    return cpy
 
 
 class Website:
@@ -71,7 +77,6 @@ class DataSet:
 
 
 class DataProcessor:
-
     full_dataset = DataSet()
     train_dataset = DataSet()
     test_dataset = DataSet()
@@ -111,6 +116,11 @@ class Classifier(object):
 
     def __init__(self, train_dataset):
         self.train_dataset = train_dataset
+
+    def __remove_result(self, attributes):
+        cpy = attributes.copy()
+        cpy.pop(Website.Tag.RESULT.value, None)
+        return cpy
 
     @abc.abstractmethod
     def train(self):

@@ -8,7 +8,6 @@ def run_test(classifier, test_dataset):
     hit_safe = miss_safe = hit_phishing = miss_phishing = 0
 
     for site in test_dataset:
-
         c = classifier.classify(site)
         if site.attributes[Website.Tag.RESULT.value] == c:
             if c == -1:

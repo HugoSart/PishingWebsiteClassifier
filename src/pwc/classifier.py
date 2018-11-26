@@ -1,10 +1,11 @@
+import abc
 from enum import Enum
 from sklearn.model_selection import train_test_split
 import numpy as np
 import csv
 
 
-def dec_to_nparray (dd, szformat = 'f8'):
+def dec_to_nparray(dd, szformat = 'f8'):
     '''
     Convert a 'rectangular' dictionnary to numpy NdArray
     entry
@@ -75,7 +76,7 @@ class DataProcessor:
     train_dataset = DataSet()
     test_dataset = DataSet()
 
-    def read_csv(self, path):
+    def __read_csv(self, path):
         with open(path) as file:
             reader = csv.DictReader(file)
             count = 0
@@ -83,7 +84,23 @@ class DataProcessor:
                 self.full_dataset.websites.append(Website(row))
                 count += 1
 
-    def split(self):
+    def __split(self):
         array = np.array(self.full_dataset.websites)
         self.train_dataset, self.test_dataset = train_test_split(array)
 
+    def build_dataset(self, path):
+        self.__read_csv(path)
+        self.__split()
+
+
+class Classifier(object):
+    __metaclass__ = abc.ABCMeta
+
+    train_dataset = DataSet()
+
+    def __init__(self, train_dataset):
+        self.train_dataset = train_dataset
+
+    @abs.abstractmethod
+    def classify(self, website):
+        return

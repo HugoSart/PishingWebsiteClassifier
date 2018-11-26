@@ -102,5 +102,9 @@ class Classifier(object):
         self.train_dataset = train_dataset
 
     @abs.abstractmethod
-    def classify(self, website):
+    def train(self):
+        return
+
+    @abs.abstractmethod
+    def classify(self, site):
         return

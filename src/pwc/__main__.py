@@ -1,6 +1,7 @@
 from pwc.classifier import DataProcessor
 from pwc.classifier import Website
 from pwc.neural_classifier import NeuralClassifier
+from pwc.svm import SvmClassifier
 
 
 def run_test(classifier, test_dataset):
@@ -45,7 +46,7 @@ def __main__():
     processor = DataProcessor()
     processor.build_dataset("dataset.csv")
 
-    classifier = NeuralClassifier(processor.train_dataset)
+    classifier = SvmClassifier(processor.train_dataset)
     classifier.train()
 
     run_test(classifier, processor.test_dataset)

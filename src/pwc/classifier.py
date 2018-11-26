@@ -80,7 +80,7 @@ class DataProcessor:
         with open(path) as file:
             reader = csv.DictReader(file)
             count = 0
-            for row in reader:
+            for row in reader: # aa
                 self.full_dataset.websites.append(Website(row))
                 count += 1
 

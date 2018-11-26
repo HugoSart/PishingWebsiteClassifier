@@ -101,10 +101,10 @@ class Classifier(object):
     def __init__(self, train_dataset):
         self.train_dataset = train_dataset
 
-    @abs.abstractmethod
+    @abc.abstractmethod
     def train(self):
         return
 
-    @abs.abstractmethod
+    @abc.abstractmethod
     def classify(self, site):
         return

@@ -22,7 +22,7 @@ def dec_to_nparray(dd, szformat = 'f8'):
     for i in range(1,len(dd[firstKey])) :
         values = [tuple(dd[k][i] for k in dd.keys())]
         data_tmp = np.array(values, dtype=dtype)
-        data = np.concatenate((data,data_tmp))
+        data = np.concatenate((data, data_tmp))
     return data
 
 
@@ -77,20 +77,31 @@ class DataProcessor:
     test_dataset = DataSet()
 
     def __read_csv(self, path):
+        print("DataProcessor:      Reading CSV file ...")
         with open(path) as file:
             reader = csv.DictReader(file)
             count = 0
-            for row in reader: # aa
-                self.full_dataset.websites.append(Website(row))
+            for row in reader:
+
+                attrs = dict()
+                for key, value in row.items():
+                    attrs[key] = float(value)
+
+                self.full_dataset.websites.append(Website(attrs))
                 count += 1
+        print("DataProcessor:      CSV file readed!")
 
     def __split(self):
+        print("DataProcessor:      Spliting dataset ...")
         array = np.array(self.full_dataset.websites)
         self.train_dataset, self.test_dataset = train_test_split(array)
+        print("DataProcessor:      Dataset splited!")
 
     def build_dataset(self, path):
+        print("DataProcessor:      Building dataset ...")
         self.__read_csv(path)
         self.__split()
+        print("DataProcessor:      Dataset builded!")
 
 
 class Classifier(object):

@@ -30,4 +30,4 @@ class NeuralClassifier(Classifier):
         print("NeuralClassifier:   Classifying website ...")
         p = self.__clf.predict([list(remove_result(site.attributes).values())])
         print("NeuralClassifier:   Website classified!")
-        return p
+        return p[0]

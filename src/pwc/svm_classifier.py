@@ -12,7 +12,6 @@ class SvmClassifier(Classifier):
         for x in self.train_dataset:
             attributes.append(list(remove_result(x.attributes).values()))
             labels.append(x.attributes[Website.Tag.RESULT.value])
-        print(attributes)
         self.classifier.fit(attributes, labels)
         return
 
